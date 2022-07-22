@@ -1,0 +1,162 @@
+<robot name="gripper">
+  <link name="gripper_base">
+    <inertial>
+      <origin xyz="0.055 0.055 0.055"/>
+      <mass value="5.0" />
+      <inertia  ixx="1.0" ixy="0.0"  ixz="0.0"  iyy="100.0"  iyz="0.0"  izz="1.0" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0"/>
+      <geometry>
+        <box size="0.11 0.11 0.11" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0"/>
+      <geometry>
+        <box size="0.11 0.11 0.11" />
+      </geometry>
+    </collision>
+  </link>
+  <link name="gripper_finger_1">
+    <inertial>
+      <origin xyz="0.045125 0.00825 0.0275"/>
+      <mass value="1.0" />
+      <inertia  ixx="1.0" ixy="0.0"  ixz="0.0"  iyy="100.0"  iyz="0.0"  izz="1.0" />
+    </inertial>
+    <visual>
+      <origin xyz="0.015 0 0"/>
+      <geometry>
+        <box size="0.09025 0.0165 0.055" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0.015 0 0"/>
+      <geometry>
+        <box size="0.09025 0.0165 0.055" />
+      </geometry>
+    </collision>
+  </link>
+  <link name="gripper_finger_2">
+    <inertial>
+      <origin xyz="0.045125 0.00825 0.0275"/>
+      <mass value="1.0" />
+      <inertia  ixx="1.0" ixy="0.0"  ixz="0.0"  iyy="100.0"  iyz="0.0"  izz="1.0" />
+    </inertial>
+    <visual>
+      <origin xyz="0.015 0 0"/>
+      <geometry>
+        <box size="0.09025 0.0165 0.055" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="-0.015 0 0"/>
+      <geometry>
+        <box size="0.09025 0.0165 0.055" />
+      </geometry>
+    </collision>
+  </link>
+  <link name="gripper_finger_3">
+    <inertial>
+      <origin xyz="0.045125 0.00825 0.0275"/>
+      <mass value="1.0" />
+      <inertia  ixx="1.0" ixy="0.0"  ixz="0.0"  iyy="100.0"  iyz="0.0"  izz="1.0" />
+    </inertial>
+    <visual>
+      <origin xyz="0.015 0 0"/>
+      <geometry>
+        <box size="0.09025 0.0165 0.055" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0.015 0 0"/>
+      <geometry>
+        <box size="0.09025 0.0165 0.055" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="hand_joint_1" type="revolute">
+    <parent link="gripper_base"/>
+    <child link="gripper_finger_1"/>
+    <axis xyz="0 0 1"/>
+    <origin xyz="0.015 0.026 0.0835" rpy="0 0 1.047"/>
+    <limit effort="30" velocity="1.0" lower="0" upper="3.14" />
+  </joint>
+
+
+  <joint name="hand_joint_2" type="revolute">
+    <parent link="gripper_base"/>
+    <child link="gripper_finger_2"/>
+    <axis xyz="0 0 1"/>
+    <origin xyz="-0.03 0 0.0835" rpy="0 0 3.14"/>
+    <limit effort="30" velocity="1.0" lower="0" upper="3.14" />
+  </joint>
+
+
+  <joint name="hand_joint_3" type="revolute">
+    <parent link="gripper_base"/>
+    <child link="gripper_finger_3"/>
+    <axis xyz="0 0 1"/>
+    <origin xyz="0.015 -0.026 0.0835" rpy="0 0 -1.047"/>
+    <limit effort="30" velocity="1.0" lower="0" upper="3.14" />
+  </joint>
+
+    <link name="world"/>
+    <joint name="gripper_world_joint" type="fixed">
+        <parent link="world"/>
+        <child link="gripper_base"/>
+    </joint>
+
+
+
+  <gazebo reference="gripper_base">
+    <material>Gazebo/Blue</material>
+  </gazebo>
+  <gazebo reference="gripper_finger_1">
+    <material>Gazebo/Red</material>
+  </gazebo>
+  <gazebo reference="gripper_finger_2">
+    <material>Gazebo/Yellow</material>
+  </gazebo>
+  <gazebo reference="gripper_finger_3">
+    <material>Gazebo/Orange</material>
+  </gazebo>
+
+  <gazebo>
+    <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+        <robotNamespace>/gripper_controller</robotNamespace>
+    </plugin>
+  </gazebo>
+
+    <transmission name="hand_joint_1_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="hand_joint_1">
+        <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="foo_motor_1">
+        <mechanicalReduction>1</mechanicalReduction>
+        <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      </actuator>
+    </transmission>
+    <transmission name="hand_joint_2_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="hand_joint_2">
+        <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="foo_motor_2">
+        <mechanicalReduction>1</mechanicalReduction>
+        <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      </actuator>
+    </transmission>
+    <transmission name="hand_joint_3_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="hand_joint_3">
+        <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="foo_motor_3">
+        <mechanicalReduction>1</mechanicalReduction>
+        <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      </actuator>
+    </transmission>
+
+</robot>

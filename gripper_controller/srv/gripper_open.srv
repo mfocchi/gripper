@@ -1,0 +1,7 @@
+uint32 diameter
+bool external_release
+uint32 tool_index
+uint32 select_releasing
+bool blocking
+---
+bool ack

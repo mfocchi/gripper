@@ -1,0 +1,39 @@
+INFORMATIONS ABOUT THE PACKAGE
+
+gripper_controller and gripper_description are the two main packages for the control of the gripper
+
+gripper_test.py is the file inside base_controllers from which I could have tested the gripper inside the framework. It basically contains only the instantiation
+
+ros_impedance_controller_ur5.launch is the file where I added the launch of the gripper_controller when arg gripper is true
+
+ur5.xacro now contains the include for the gripper.xacro
+
+load_ur5e.launch edited to pass through the gripper argument to robot_description
+
+
+
+TESTING
+
+you can launch gripper_controller/launch/gripper_controller_test.launch to test solely the (simulated with cubes) end-effector.
+It generates two services /gripper_controller/gripper/open and /gripper_controller/gripper/close that accepts a gripper_open.msg and gripper_close.msg respectively
+You can test the send of the onrobot file by executing the script gripper_controller/scripts/socket_testing.py and call the service /gripper_controller/gripper/open (the python script it's already configured to connect to the socket_testing.py socket.
+
+COMMANDS
+
+~/ros_ws$ catkin build
+
+~/ros_ws$ source ~/ros_ws/devel/setup.bash
+
+~/ros_ws/src/locosim/gripper_controller/launch$ roslaunch gripper_controller_test.launch
+
+~/ros_ws/src/locosim/gripper_controller/scripts$ python3 socket_testing.py
+
+$ rosservice call /gripper_controller/gripper/open "{ diameter: 80, blocking: true }"
+
+
+
+
+ADDITIONAL REQUIREMENTS
+
+Python.h package was installed for the c++ controller
+

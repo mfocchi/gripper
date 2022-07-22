@@ -1,0 +1,8 @@
+uint32 diameter
+uint32 force
+bool external_grip
+bool stop_if_no_force
+uint32 tool_index
+bool blocking
+---
+bool ack

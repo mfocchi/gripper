@@ -1,0 +1,16 @@
+<?xml version="1.0" ?>
+<launch>
+    <arg name="robot_name" default="$(arg robot_name)" />
+    <arg name="gripper_name" default="gripper" />
+    <arg name="gui" default="true" />
+
+	<!-- 4 -Loading  controllers settings -->
+	<rosparam file="$(find gripper_controller)/config/gripper_controller.yaml" ns="/$(arg robot_name)" command="load"/>
+
+
+        <!-- 5  - Loading the controllers (joint state publisher (install ros-kinetic-joint-state-controller) is necessary for robot_state publisher to compute the TFs) -->
+	<node name="gripper_controller" pkg="controller_manager" type="spawner" respawn="false"
+		output="screen" ns="/$(arg robot_name)"  args="gripper_controller" />
+
+</launch>
+

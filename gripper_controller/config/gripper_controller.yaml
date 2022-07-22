@@ -1,0 +1,16 @@
+gripper_controller:
+  # type: gripper_controller/GripperController
+  type: gripper_controller/GripperController
+  joints :
+    - hand_joint_1
+    - hand_joint_2
+    - hand_joint_3
+
+  hand_joint_1:
+    pid: {p: 1000.0, i: 100.0, d: 100.0}
+  hand_joint_2:
+    pid: {p: 1000.0, i: 100.0, d: 100.0}
+  hand_joint_3:
+    pid: {p: 1000.0, i: 100.0, d: 100.0}
+
+
